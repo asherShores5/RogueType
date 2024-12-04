@@ -1,0 +1,164 @@
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --terminal-green: #33ff33;
+  --terminal-bg: #000;
+  --scan-line-color: rgba(51, 255, 51, 0.1);
+}
+
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 0.95; }
+  10% { opacity: 0.9; }
+  15% { opacity: 0.85; }
+  20% { opacity: 0.95; }
+  25% { opacity: 0.85; }
+  30% { opacity: 0.9; }
+  35% { opacity: 0.95; }
+  40% { opacity: 0.85; }
+  45% { opacity: 0.9; }
+  50% { opacity: 0.95; }
+  55% { opacity: 0.85; }
+  60% { opacity: 0.9; }
+  65% { opacity: 0.95; }
+  70% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.terminal-container {
+  position: relative;
+  overflow: hidden;
+  background: var(--terminal-bg);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(51, 255, 51, 0.3);
+}
+
+.terminal-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    transparent 50%,
+    rgba(0, 0, 0, 0.25) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+.terminal-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(51, 255, 51, 0.02);
+  pointer-events: none;
+  animation: scan 10s linear infinite;
+}
+
+.retro-terminal {
+  font-family: 'VT323', monospace;
+  color: var(--terminal-green);
+  text-shadow: 0 0 5px var(--terminal-green);
+  line-height: 1.5;
+}
+
+.terminal-text {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--terminal-green);
+  animation: typing 3.5s steps(40, end), blink 1s step-end infinite;
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.terminal-input {
+  background: transparent;
+  border: 1px solid var(--terminal-green);
+  color: var(--terminal-green);
+  padding: 8px;
+  width: 100%;
+  outline: none;
+  caret-color: var(--terminal-green);
+}
+
+.terminal-input:focus {
+  box-shadow: 0 0 10px rgba(51, 255, 51, 0.3);
+}
+
+.terminal-button {
+  background: transparent;
+  border: 1px solid var(--terminal-green);
+  color: var(--terminal-green);
+  padding: 8px 16px;
+  transition: all 0.3s ease;
+}
+
+.terminal-button:hover {
+  background: var(--terminal-green);
+  color: var(--terminal-bg);
+  text-shadow: none;
+}
+
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip: rect(0, 900px, 0, 0);
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -1px 0 red;
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -1px 0 blue;
+  animation: glitch-anim-2 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip: rect(20px, 900px, 21px, 0); }
+  100% { clip: rect(84px, 900px, 85px, 0); }
+}
+
+@keyframes blink {
+  0%, 95% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
